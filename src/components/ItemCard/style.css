@@ -1,0 +1,18 @@
+.itemCard{
+    width: 200px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-inline:1px solid black;
+    gap: 15px;
+}
+.itemCard:hover{
+    background-color: rgba(0, 0, 0, 0.215);
+}
+
+.itemCard img{
+    width: 150px;
+    height: 100px;
+}

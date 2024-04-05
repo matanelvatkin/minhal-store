@@ -1,0 +1,9 @@
+.itemsList{
+    width: 1000px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-left: 10px;
+}

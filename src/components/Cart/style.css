@@ -1,0 +1,17 @@
+.cart{
+    position: fixed;
+    width: 150px;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    right: 0;
+}
+
+.cart_item{
+    width: 150px;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
