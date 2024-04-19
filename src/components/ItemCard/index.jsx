@@ -21,7 +21,7 @@ const onClick = (number)=>{
   return (
     <div className='itemCard'>
         <img src={item.image} alt="" />
-        <p>{item.name}</p>
+        <p>{item.title}</p>
         <p>{item.price}</p>
         <AddItemsButtons numberText={cart[item.id]?cart[item.id].number:0} onClick={onClick}/>
     </div>

@@ -16,34 +16,41 @@ export default function Layout() {
   const [categories, setCategories] = useState([]);
   const [cart, setCart] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const {user, setUser} = useContext(userContext);
-  const navigate = useNavigate()
+  const { user, setUser } = useContext(userContext);
+  const navigate = useNavigate();
   useEffect(() => {
-    const tempCategory = [];
-    items.forEach((item) => {
-      if (!tempCategory.includes(item.category)) {
-        tempCategory.push(item.category);
-      }
-    });
-    setCategories(tempCategory);
-  }, [items]);
+    fetch('https://fakestoreapi.com/products/categories')
+    .then(res=>res.json())
+    .then(res=>
+    setCategories(res))
+  }, []); 
 
-  useEffect(()=>{
-    const localUser = JSON.parse(localStorage.getItem('user'))
-    if(localUser) {
+  useEffect(() => {
+    const localUser = JSON.parse(localStorage.getItem("user"));
+    if (localUser) {
       setUser(localUser);
+    } else {
+      setUser();
+      navigate("../login");
     }
-    else{
-      setUser()
-      navigate('../login')
-    }
-  },[localStorage.user])
+  }, [localStorage.user]);
+  const getProducts = async () => {
+    const json = await fetch("https://fakestoreapi.com/products").catch((err) =>
+      console.log(err)
+    );
+    const data = await json.json();
+    setItems(data)
+  };
+  useEffect(() => {
+    // fetch("https://fakestoreapi.com/products")
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data))
+    //   .catch((err) => console.log(err));
+    getProducts();
+  }, []);
 
-  useEffect(()=>{
-    console.log(user);
-  },[user])
-  
-  return (<>
+  return (
+    <>
       {user && (
         <cartContext.Provider value={{ cart, setCart }}>
           <div className="layout">
@@ -57,11 +64,11 @@ export default function Layout() {
                     : items.filter((item) => item.category === selectedCategory)
                 }
               />
-              <Cart /> 
+              <Cart />
             </main>
           </div>
         </cartContext.Provider>
       )}
-  </>
+    </>
   );
 }

@@ -21,7 +21,7 @@ export default function Cart() {
     <div className='cart'>
       {Object.values(cart).map(item=>{
         return <div className='cart_item'>
-          <p>{item.name}</p>
+          <p>{item.title}</p>
           <AddItemsButtons onClick={(number)=>onClick(number,item)} numberText={item.number}/>
         </div>
       })}

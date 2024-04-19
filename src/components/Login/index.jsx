@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({setUser}) {
+export default function Login({ setUser }) {
   const [loginState, setLoginState] = useState({ email: "", password: "" });
-  const nav = useNavigate()
+  const nav = useNavigate();
   const onChanceInput = (e) => {
     setLoginState((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -11,11 +11,25 @@ export default function Login({setUser}) {
   };
   const onClickSubmit = (e) => {
     e.preventDefault();
-    //go to data and check
-    setUser(loginState)
-    localStorage.setItem("user",JSON.stringify(loginState))
-    nav('../')
-
+    fetch("https://fakestoreapi.com/users")
+    .then((res) => res.json())
+    .then((json) => {
+      const userFound = json.find((user) => {
+        if (user.email === e.target.email.value || user.username === e.target.email.value)
+        if (user.password === e.target.password.value) {
+          return true;
+        }
+        return false;
+      });
+        if (userFound) {
+          setUser(userFound);
+          localStorage.setItem("user", JSON.stringify(loginState));
+          nav("../");
+        }
+        else{
+          alert("User not found")
+        }
+      });
   };
   return (
     <form
@@ -33,7 +47,8 @@ export default function Login({setUser}) {
         name="password"
         placeholder="password"
         onInput={onChanceInput}
-      />      <button type="submit">login</button>
+      />{" "}
+      <button type="submit">login</button>
     </form>
   );
 }
